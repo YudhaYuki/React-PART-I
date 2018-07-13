@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import UserInput from './UserInput/UserInput';
-import UserOutput from './UserOutput/UserOutput';
 
 
 
@@ -15,13 +13,9 @@ class App extends Component {
       { name: 'Rene', age: 66 },
       { name: 'Lieve', age: 57 }
     ],
-    otherState: 'Some other value'
-  }
+    otherState: 'Some other value',
+    showPersons: false
 
-  userNameChangeHandler = (event) => {
-    this.setState({
-      username: event.target.value
-    })
   }
 
   switchNameHandler = (newName) => {
@@ -46,6 +40,11 @@ class App extends Component {
     })
   }
 
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow});
+  }
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -61,38 +60,25 @@ class App extends Component {
         <p>This is really working</p>
         <button 
           style={style}
-          onClick={() => this.switchNameHandler('Wijaya!!!')}>Switch name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age} 
-          click={this.switchNameHandler.bind(this, 'Ramadhona')} 
-          changed={this.nameChangeHandler} > My Hobbies: Racing </Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age} />
-
-        <ol>
-          <li>Create TWO new components: UserInput and UserOutput</li>
-          <li>UserInput should hold an input element, UserOutput two paragraphs</li>
-          <li>Output multiple UserOutput components in the App component (any paragraph texts of your choice)</li>
-          <li>Pass a username (of your choice) to UserOutput via props and display it there</li>
-          <li>Add state to the App component (=> the username) and pass the username to the UserOutput component</li>
-          <li>Add a method to manipulate the state (=> an event-handler method)</li>
-          <li>Pass the event-handler method reference to the UserInput component and bind it to the input-change event</li>
-          <li>Ensure that the new input entered by the user overwrites the old username passed to UserOutput</li>
-          <li>Add two-way-binding to your input (in UserInput) to also display the starting username</li>
-          <li>Add styling of your choice to your components/ elements in the components - both with inline styles and stylesheets</li>
-        </ol>
+          onClick={this.togglePersonsHandler}>Toggle person</button>
         
-        <UserInput 
-          changed= {this.userNameChangeHandler}
-          currentName= {this.state.username} />
-        <UserOutput userName = {this.state.username} />
-        <UserOutput userName = {this.state.username} />
-        <UserOutput userName = 'Yudha' />
+        {this.state.showPersons ? 
+          <div> 
+            <Person 
+              name={this.state.persons[0].name} 
+              age={this.state.persons[0].age} />
+
+            <Person 
+              name={this.state.persons[1].name} 
+              age={this.state.persons[1].age} 
+              click={this.switchNameHandler.bind(this, 'Ramadhona')} 
+              changed={this.nameChangeHandler} > My Hobbies: Racing </Person>
+
+            <Person 
+              name={this.state.persons[2].name} 
+              age={this.state.persons[2].age} />
+          </div> : null 
+        }
 
       </div>
     );
