@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 
 
@@ -106,14 +107,14 @@ class App extends PureComponent {
     }
 
     return (
-      <div className={classes.App}>
+      <WithClass classes={classes.App}>
         <button onClick={() => {this.setState({showPersons: true})}}>Show Person</button>
         <Cockpit 
           showPersons={this.state.showPersons} 
           persons={this.state.persons}
           clicked={this.togglePersonsHandler} />
         {persons}
-      </div>
+      </WithClass>
     );
 
     // return React.createElement('div', null, React.createElement('h1', {className: 'App'}, 'I am a React App'));
